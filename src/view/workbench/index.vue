@@ -10,8 +10,10 @@
         >
           <van-col span="5" offset="1">燕过留声</van-col>
           <van-col span="12"></van-col>
-          <van-col span="3"><van-icon name="search" size="30" @click="onShowSearch"/></van-col>
-          <van-col span="3"><van-icon name="add-o" size="30" /></van-col>
+          <van-col span="3"
+            ><van-icon name="search" size="30" @click="onShowSearch"
+          /></van-col>
+          <van-col span="3"><van-icon name="add-o" size="30" @click="addeEventButtomVisible = true" /></van-col>
         </van-row>
       </span>
       <span v-else>
@@ -33,15 +35,25 @@
         </van-row>
       </span>
     </div>
-    <van-list
-      style="margin: 50px 0 50px 0"
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <van-list
+        style="margin: 50px 0 50px 0"
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+        <van-cell v-for="item in list" :key="item" :title="item" />
+      </van-list>
+    </van-pull-refresh>
+    <van-popup
+      v-model="addeEventButtomVisible"
+      closeable
+      position="bottom"
+      :style="{ height: '50%' }"
     >
-      <van-cell v-for="item in list" :key="item" :title="item" />
-    </van-list>
+    添加事件区域
+    </van-popup>
   </div>
 </template>
 <script>
@@ -50,6 +62,8 @@ import { List } from "vant";
 import { Search } from "vant";
 import { Icon } from "vant";
 import { Col, Row } from "vant";
+import { PullRefresh } from "vant";
+import { Popup } from 'vant';
 // import { Toast } from "vant";
 export default {
   components: {
@@ -60,6 +74,8 @@ export default {
     [Icon.name]: Icon,
     [Col.name]: Col,
     [Row.name]: Row,
+    [PullRefresh.name]: PullRefresh,
+    [Popup.name]: Popup,
   },
   data() {
     return {
@@ -69,6 +85,8 @@ export default {
       finished: false,
       searchKey: "yezhexiong",
       searchVisible: false,
+      isLoading: false,
+      addeEventButtomVisible:false,
     };
   },
   methods: {
@@ -89,14 +107,20 @@ export default {
         }
       }, 1000);
     },
-    onSearch(){
-      this.searchVisible = false
+    onSearch() {
+      this.searchVisible = false;
     },
-    onHidenSearch(){
-      this.searchVisible = false
+    onHidenSearch() {
+      this.searchVisible = false;
     },
-    onShowSearch(){
-      this.searchVisible = true
+    onShowSearch() {
+      this.searchVisible = true;
+    },
+    onRefresh() {
+      setTimeout(() => {
+        this.isLoading = false;
+        this.count++;
+      }, 1000);
     },
     // onClickLeft() {
     //   Toast("返回");

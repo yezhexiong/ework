@@ -1,19 +1,33 @@
 <template>
   <div class="ework-workbench-index">
-    <router-view> </router-view>
-    <van-tabbar v-model="active" @change="handlerTabbarChange">
-      <van-tabbar-item icon="home-o" key='workbench' to="/home/workbench">工作台</van-tabbar-item>
-      <van-tabbar-item icon="cluster-o" key='app' to="/home/app">应用</van-tabbar-item>
-      <van-tabbar-item icon="setting-o" key='setting' to="/home/setting">管理</van-tabbar-item>
+    <span v-show="curTabbar === 'workbench'">
+      <workbench-box />
+    </span>
+    <span v-show="curTabbar === 'app'">
+      <app-box />
+    </span>
+    <sapn v-show="curTabbar === 'setting'">
+      <setting-box />
+    </sapn>
+    <van-tabbar v-model="curTabbar">
+      <van-tabbar-item icon="home-o" name="workbench">工作台</van-tabbar-item>
+      <van-tabbar-item icon="cluster-o" name="app">应用</van-tabbar-item>
+      <van-tabbar-item icon="setting-o" name="setting">管理</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
 <script>
 import { Tabbar, TabbarItem } from "vant";
+import WorkbenchBox from "@/view/workbench";
+import AppBox from "@/view/app";
+import SettingBox from "@/view/setting";
 export default {
   components: {
     [Tabbar.name]: Tabbar,
     [TabbarItem.name]: TabbarItem,
+    WorkbenchBox,
+    AppBox,
+    SettingBox,
   },
   data() {
     return {
@@ -23,13 +37,10 @@ export default {
       finished: false,
       searchKey: "yezhexiong",
       searchVisible: true,
+      curTabbar: "workbench",
     };
   },
-  methods: {
-    handlerTabbarChange(val){
-      console.log('handlerTabbarChange.val=',val)
-    }
-  }
+  methods: {},
 };
 </script>
 

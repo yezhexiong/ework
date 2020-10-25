@@ -12,34 +12,34 @@ const routes = [
   {
     path: '/home',
     name: '主界面',
-    redirect:'/home/workbench',
+    // redirect:'/home/workbench',
     component: 
-      () => import('./view/index/home'),
+      () => import('@/view/index/home'),
       children: [
         {
           path: 'workbench',
           name: '工作台',
-          component: () => import('./view/workbench'),
+          component: () => import('@/view/workbench'),
         },
         {
           path: 'app',
           name: 'APP应用',
-          component: () => import('./view/app'),
+          component: () => import('@/view/app'),
         },
         {
           path: 'setting',
           name: '管理',
-          component: () => import('./view/setting'),
+          component: () => import('@/view/setting'),
         },
     ]
   },{
     path: '/login',
     name: '登录页面',
-    component: () => import('./view/index/login'),
+    component: () => import('@/view/index/login'),
   },
   {
     name: 'test',
-    component: () => import('./view/test/index.vue'),
+    component: () => import('@/view/test/index.vue'),
     meta: {
       title: '测试'
     }
@@ -52,7 +52,7 @@ routes.forEach(route => {
 });
 
 const router = new Router({ 
-  mode:'history',
+  // mode:'history',
   routes 
 });
 
