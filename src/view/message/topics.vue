@@ -10,10 +10,8 @@
         >
           <van-col span="5" offset="1">燕过留声</van-col>
           <van-col span="12"></van-col>
-          <van-col span="3"
-            ><van-icon name="search" size="30" @click="onShowSearch"
-          /></van-col>
-          <van-col span="3"><van-icon name="add-o" size="30" @click="addeEventButtomVisible = true" /></van-col>
+          <van-col span="3"><van-icon name="search" size="30" @click="onShowSearch"/></van-col>
+          <van-col span="3"><van-icon name="filter-o" size="30"/></van-col>
         </van-row>
       </span>
       <span v-else>
@@ -46,14 +44,14 @@
         <van-cell v-for="item in list" :key="item" :title="item" />
       </van-list>
     </van-pull-refresh>
-    <van-popup
+    <!-- <van-popup
       v-model="addeEventButtomVisible"
       closeable
       position="bottom"
       :style="{ height: '50%' }"
     >
     添加事件区域
-    </van-popup>
+    </van-popup> -->
   </div>
 </template>
 <script>
@@ -63,8 +61,8 @@ import { Search } from "vant";
 import { Icon } from "vant";
 import { Col, Row } from "vant";
 import { PullRefresh } from "vant";
-import { Popup } from 'vant';
-// import { Toast } from "vant";
+// import { Popup } from 'vant';
+import { Toast } from "vant";
 export default {
   components: {
     [List.name]: List,
@@ -75,7 +73,8 @@ export default {
     [Col.name]: Col,
     [Row.name]: Row,
     [PullRefresh.name]: PullRefresh,
-    [Popup.name]: Popup,
+    [Toast.name]: Toast,
+    // [Popup.name]: Popup,
   },
   data() {
     return {
@@ -86,7 +85,7 @@ export default {
       searchKey: "yezhexiong",
       searchVisible: false,
       isLoading: false,
-      addeEventButtomVisible:false,
+      // addeEventButtomVisible: false,
     };
   },
   methods: {
@@ -108,9 +107,11 @@ export default {
       }, 1000);
     },
     onSearch() {
+      Toast('onSearch');
       this.searchVisible = false;
     },
     onHidenSearch() {
+      Toast('onHidenSearch');
       this.searchVisible = false;
     },
     onShowSearch() {

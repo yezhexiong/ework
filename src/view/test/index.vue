@@ -1,13 +1,49 @@
 <template>
-  <div class="view-test-index">
-    <div class="van-head-fixed">
-    van-head-fixed
+  <div class="my-home-master">
+    <div class="my-menu-head">
+    my-menu-head
     </div>
-    <div class="van-body">
-      <div style="height:1200px;">123123123</div>
+    <div class="my-menu-body">
+      <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
+              <li>通讯录管理</li>
     </div>
-    <div class="van-bottom-fixed">
-     van-bottom-fixed
+    <div class="my-menu-bottom">
+     my-menu-bottom
     </div>
   </div>
 </template>
@@ -75,33 +111,39 @@ export default {
 
 <style lang="less">
 
-.view-test-index {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  height: 100%;
-  border:solid 1px red;
-  flex-direction: column;
+.my-home-master {
+  // display: -webkit-box;
+  // display: -webkit-flex;
+  // display: flex;
+  // height: 100%;
+  // border:solid 1px red;
+  // flex-direction: column;
   // justify-content: center;
   // align-items: center;
-  .van-head-fixed{
+  .my-menu-head{
+    position: fixed;
+    top:0;
     width: 100%;
     height:50px;
-    border:solid 1px green;
+    border-bottom:solid 1px #ddd;
+    background-color: #eee;
   }
-  .van-bottom-fixed{
+  .my-menu-bottom{
+    position: fixed;
+    bottom:0;
     width: 100%;
     height:50px;
-    border:solid 1px green;
+    border-top:solid 1px ddd;
+    background-color: #eee;
   }
-  .van-body{
+  .my-menu-body{
     width: 100%;
-    height: 100%;
     border:solid 1px green;
-    overflow:auto;
+    margin-top:50px;
+    margin-bottom:50px;
   }
 }
-.van-head-fixed1 {
+.my-menu-head1 {
   position: fixed;
   width: 100%;
   z-index: 1;

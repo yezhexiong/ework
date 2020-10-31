@@ -18,13 +18,13 @@ const routes = [
       children: [
         {
           path: 'workbench',
-          name: '工作台',
-          component: () => import('@/view/workbench'),
+          name: '消息',
+          component: () => import('@/view/message'),
         },
         {
           path: 'app',
           name: 'APP应用',
-          component: () => import('@/view/app'),
+          component: () => import('@/view/workgroup'),
         },
         {
           path: 'setting',
@@ -43,7 +43,7 @@ const routes = [
     meta: {
       title: '测试'
     }
-  },
+  }
 ];
 
 // add route path
