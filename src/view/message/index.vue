@@ -55,16 +55,59 @@
                   <div class="right-top">
                     <span>{{ topic.UserName }}</span>
                     <span>{{ topic.CreateTime }}</span>
-                    <span>{{ topic.Tag }}</span>
-                    <span>{{ topic.Workgroup }}</span>
+                    <span>
+                      <van-icon name="label-o" />
+                      <van-tag plain type="warning">{{ topic.Tag }}</van-tag>
+                    </span>
+                    <span>
+                      <van-icon name="friends-o" />
+                      <van-tag plain type="success ">{{topic.Workgroup}}</van-tag>
+                    </span>
                   </div>
-                  <div class="right-body">
+                  <div class="right-content">
                     {{ topic.Memo }}
                   </div>
-                  <div class="right-bottom">
-                    <span>评论 2</span><span>+评论</span>
+                  <div class="right-imgs">
+                    <van-image fit="contain" src="https://img.yzcdn.cn/vant/cat.jpeg"/>
+                    <van-image fit="contain" src="https://img.yzcdn.cn/vant/cat.jpeg"/>
+                    <van-image fit="contain" src="https://img.yzcdn.cn/vant/cat.jpeg"/>
+                    <van-image fit="contain" src="https://img.yzcdn.cn/vant/cat.jpeg"/>
+                    <van-image fit="contain" src="https://img.yzcdn.cn/vant/cat.jpeg"/>
                   </div>
-                  <div></div>
+                  <div class="right-reader">
+                    <i class="van-icon" style="color: green">已读<div class="van-info-green">9</div></i>
+                    <i class="van-icon" style="color: #f00">未读<div class="van-info">9</div></i>
+                  </div>
+                  <div class="right-replay-header">
+                    <span>评论 2</span><span>
+                      <van-button type="primary" @click="replayBoxVisible=true">+评论</van-button>
+                      <!-- +评论 -->
+                    </span>
+                  </div>
+                  <div class="right-replay">
+                    <div class="replay-top">
+                      <span>张三</span>
+                      <span>2020-03-13</span>
+                    </div>
+                    <div class="right-content">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet  
+                    </div>
+                    <div class="right-content-imgs">
+                      <van-image fit="contain" src="https://img.yzcdn.cn/vant/cat.jpeg"/>
+                      <van-image fit="contain" src="https://img.yzcdn.cn/vant/cat.jpeg"/>
+                      <van-image fit="contain" src="https://img.yzcdn.cn/vant/cat.jpeg"/>
+                    </div>
+                  </div>
+                  <div class="right-replay">
+                    <div class="replay-top">
+                      <span>张三</span>
+                      <span>2020-03-13</span>
+                    </div>
+                    <div class="right-content">
+                      已经通过验收
+                    </div>
+                                   
+                  </div>
                 </div>
               </div>
             </template>
@@ -72,14 +115,21 @@
         </van-list>
       </div>
     </van-pull-refresh>
-    <!-- <van-popup
-      v-model="addeEventButtomVisible"
+    <van-popup
+      v-model="replayBoxVisible"
       closeable
       position="bottom"
-      :style="{ height: '50%' }"
+      :style="{ height: '50%',background:'#ccc'}"
     >
-    添加事件区域
-    </van-popup> -->
+    <van-field
+      v-model="message"
+      rows="5"
+      autosize
+      label="留言"
+      type="textarea"
+      placeholder="请输入留言"
+    />
+    </van-popup>
   </div>
 </template>
 <script>
@@ -89,8 +139,9 @@ import { Search } from "vant";
 import { Icon } from "vant";
 import { Col, Row } from "vant";
 import { PullRefresh } from "vant";
-// import { Popup } from 'vant';
+import { Popup } from 'vant';
 import { Toast } from "vant";
+import { Tag, Image,Field  } from "vant";
 export default {
   components: {
     [List.name]: List,
@@ -102,7 +153,10 @@ export default {
     [Row.name]: Row,
     [PullRefresh.name]: PullRefresh,
     [Toast.name]: Toast,
-    // [Popup.name]: Popup,
+    [Tag.name]: Tag,
+    [Image.name]: Image,
+    [Field.name]: Field,
+    [Popup.name]: Popup, 
   },
   data() {
     return {
@@ -112,7 +166,7 @@ export default {
       searchKey: "yezhexiong",
       searchVisible: false,
       isLoading: false,
-      // addeEventButtomVisible: false,
+      replayBoxVisible: false,
     };
   },
   mounted() {},
@@ -182,7 +236,7 @@ export default {
     border-bottom: solid 1px #eee;
   }
   .message-topic {
-    margin-top: 3px;
+    margin-top: 37px;
     width: 100%;
     display: flex;
     justify-content: space-around;
@@ -211,10 +265,44 @@ export default {
           padding-right: 9px;
         }
       }
-      .right-body {
+      .right-content {
         font-size: 14px;
       }
-      .right-bottom {
+      .right-imgs {
+        .van-image {
+          border: solid 1px #eee;
+          width: 80px;
+          height: 80px;
+          margin-right: 8px;
+        }
+      }
+      .right-reader {
+        i {
+          padding-left: 12px;
+        }
+        .van-info-green {
+          position: absolute;
+          top: 0;
+          right: 0;
+          box-sizing: border-box;
+          min-width: 16px;
+          padding: 0 3px;
+          color: #fff;
+          font-weight: 500;
+          font-size: 12px;
+          font-family: -apple-system-font, Helvetica Neue, Arial, sans-serif;
+          line-height: 1.2;
+          text-align: center;
+          background-color: green;
+          border: 1px solid #fff;
+          border-radius: 16px;
+          -webkit-transform: translate(50%, -50%);
+          transform: translate(50%, -50%);
+          -webkit-transform-origin: 100%;
+          transform-origin: 100%;
+        }
+      }
+      .right-replay-header {
         display: flex;
         justify-content: space-between;
         border-top: solid 1px #eee;
@@ -223,6 +311,30 @@ export default {
         margin-top: 5px;
         span {
           padding: 0 9px 0 9px;
+        }
+      }
+      .right-replay {
+        padding:5px 0 0 0;
+        .replay-top {
+          height: 30px;
+          display: flex;
+          align-items: flex-end;
+          span {
+            padding-right: 9px;
+          }
+        }
+        .right-content {
+          padding-left: 40px;
+          font-size: 13px;
+        }
+        .right-content-imgs {
+          margin-left: 40px;
+          .van-image {
+            border: solid 1px #eee;
+            width: 60px;
+            height: 60px;
+            margin-right: 8px;
+          }
         }
       }
     }
