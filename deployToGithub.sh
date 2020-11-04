@@ -16,7 +16,7 @@ cd dist
 
 git init
 git add -A
-git commit -m 'deploy v1.0.3'
+git commit -m 'deploy v1.0.5'
 
 # 部署到 https://<USERNAME>.github.io
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master

@@ -35,11 +35,12 @@
         </van-row>
       </span>
     </div>
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-      <div class="message-topics">
+    <div class="message-topics">
+      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <van-list
           v-model="loading"
           :finished="finished"
+          offset="50"
           finished-text="没有更多了"
           @load="onLoad"
         >
@@ -80,8 +81,7 @@
                   </div>
                   <div class="right-replay-header">
                     <span>评论 2</span><span>
-                      <van-button type="primary" @click="replayBoxVisible=true">+评论</van-button>
-                      <!-- +评论 -->
+                      <span @click="replayBoxVisible=true">+评论</span>
                     </span>
                   </div>
                   <div class="right-replay">
@@ -98,37 +98,29 @@
                       <van-image fit="contain" src="https://img.yzcdn.cn/vant/cat.jpeg"/>
                     </div>
                   </div>
-                  <div class="right-replay">
-                    <div class="replay-top">
-                      <span>张三</span>
-                      <span>2020-03-13</span>
-                    </div>
-                    <div class="right-content">
-                      已经通过验收
-                    </div>
-                                   
-                  </div>
                 </div>
               </div>
             </template>
           </van-cell>
         </van-list>
-      </div>
-    </van-pull-refresh>
+      </van-pull-refresh>
+    </div>
+    <!-- 相关配套组件 -->
     <van-popup
       v-model="replayBoxVisible"
-      closeable
       position="bottom"
-      :style="{ height: '50%',background:'#ccc'}"
+      :style="{ height: '188px',background:'#ccc'}"
     >
-    <van-field
-      v-model="message"
-      rows="5"
-      autosize
-      label="留言"
-      type="textarea"
-      placeholder="请输入留言"
-    />
+      <div style="display:flex; justify-content:space-between; margin:8px;"><span @click="replayBoxVisible=false">取消</span><span @click="handlReplay">提交</span></div>
+      <div style="margin:8px;">
+        <van-field
+          v-model="replayMessage"
+          rows="5"
+          type="textarea"
+          placeholder="请输入留言"
+        />
+      </div>
+      <div style="float:right; margin-right:15px;"><span>@</span><span>+</span></div>
     </van-popup>
   </div>
 </template>
@@ -141,7 +133,7 @@ import { Col, Row } from "vant";
 import { PullRefresh } from "vant";
 import { Popup } from 'vant';
 import { Toast } from "vant";
-import { Tag, Image,Field  } from "vant";
+import { Tag, Image,Field,Button } from "vant";
 export default {
   components: {
     [List.name]: List,
@@ -157,30 +149,45 @@ export default {
     [Image.name]: Image,
     [Field.name]: Field,
     [Popup.name]: Popup, 
+    [Button.name]: Button, 
   },
   data() {
     return {
+      searchVisible: false,
+      searchKey: "",
+
       listTopic: [],
+      refreshing: false,
       loading: false,
       finished: false,
-      searchKey: "yezhexiong",
-      searchVisible: false,
-      isLoading: false,
+
       replayBoxVisible: false,
+      replayMessage:'',
     };
   },
-  mounted() {},
+  created() {
+    console.log('message > created')
+  },
+  mounted(){
+    console.log('message > mounted')
+  },
+  destroyed() {
+    console.log('message > destroyed')
+  },
   methods: {
     onLoad() {
+      console.log('message > methods > onLoad')
       // 异步更新数据
       // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-      let step = 1;
       setTimeout(() => {
-        ++step;
-        console.log("step=", step);
-        for (let i = 0; i < 5; ++i) {
+        if (this.refreshing) {
+          this.listTopic = [];
+          this.refreshing = false;
+        }
+
+        for (let i = 0; i < 1; ++i) {
           this.listTopic.push({
-            id: `topic_${step}_${i}`,
+            id: `topic_${this.listTopic.length+1}_${i}`,
             UserName: `叶浙雄${i}`,
             Tag: `面料检验`,
             CreatTime: `2020年12月31日`,
@@ -192,7 +199,7 @@ export default {
         this.loading = false;
 
         // 数据全部加载完成
-        if (this.listTopic.length >= 40) {
+        if (this.listTopic.length >= 5) {
           this.finished = true;
         }
       }, 1000);
@@ -209,10 +216,18 @@ export default {
       this.searchVisible = true;
     },
     onRefresh() {
-      setTimeout(() => {
-        this.isLoading = false;
-        this.count++;
-      }, 1000);
+      console.log('message > methods > onRefresh')
+      // 清空列表数据
+      this.finished = false;
+
+      // 重新加载数据
+      // 将 loading 设置为 true，表示处于加载状态
+      this.loading = true;
+      this.onLoad();
+    },
+    handlReplay(){
+      this.replayBoxVisible=false
+      Toast("留言成功"+this.replayMessage);
     },
     // onClickLeft() {
     //   Toast("返回");
@@ -235,8 +250,10 @@ export default {
     background: #eee;
     border-bottom: solid 1px #eee;
   }
+  .message-topics {
+    margin: 37px 0 37px 0;
+  }
   .message-topic {
-    margin-top: 37px;
     width: 100%;
     display: flex;
     justify-content: space-around;

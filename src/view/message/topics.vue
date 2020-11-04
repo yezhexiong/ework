@@ -82,7 +82,7 @@ export default {
       list: [],
       loading: false,
       finished: false,
-      searchKey: "yezhexiong",
+      searchKey: "",
       searchVisible: false,
       isLoading: false,
       // addeEventButtomVisible: false,

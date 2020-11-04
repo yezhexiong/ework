@@ -78,7 +78,7 @@ export default {
       list: [],
       loading: false,
       finished: false,
-      value: "yezhexiong",
+      value: "",
     };
   },
   methods: {
