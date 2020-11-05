@@ -16,20 +16,7 @@
           finished-text="没有更多了"
           @load="onLoad"
         >
-          <van-cell v-for="item in listWorkgroup" :key="item.Id">
-            <template>
-              <div class="content-item">
-                <div class="item-left"><van-image style="border-radius: 13px;" round fit="cover" :src="item.HeadUrl" width="4rem" height="4rem"/></div>
-                <div class="item-right">
-                  <div class="right-name">{{item.WorkgroupName}}</div>
-                  <div class="right-num"><span>帖子数量{{item.MessageNum}}万</span><span>未读{{item.UnreadNum}}</span><span>人员{{item.PersonsNum}}人</span></div>
-                  <div class="right-tags">
-                    <van-tag v-for="tag in item.Tags" :key="tag" type="primary">{{tag}}</van-tag>
-                  </div>
-                </div>
-              </div>
-            </template>
-          </van-cell>
+          <van-cell v-for="item in list" :key="item" :title="item" />
         </van-list>
       </van-pull-refresh>
     </div>
@@ -37,29 +24,27 @@
   </div>
 </template>
 <script>
-// import { Grid, GridItem,Col, Row,List,Cell,PullRefresh } from "vant";
-import { Col,Row,Tag,Image,List,Cell,PullRefresh } from "vant";
+import { Grid, GridItem,Col, Row,List,Cell,PullRefresh } from "vant";
 export default {
   components: {
-    // [Grid.name]: Grid,
-    // [GridItem.name]: GridItem,
+    [Grid.name]: Grid,
+    [GridItem.name]: GridItem,
     [Col.name]: Col,
     [Row.name]: Row,
-    [Tag.name]: Tag,
-    [Image.name]: Image,
     [List.name]: List,
     [Cell.name]: Cell,
     [PullRefresh.name]: PullRefresh,
      
   },
   props: {
+    checkScroll2:Boolean,
   },
   data() {
     return {
+      list: [],
       refreshing: false,
       loading: false,
       finished: false,
-      listWorkgroup: [],
     };
   },
   created() {
@@ -68,7 +53,6 @@ export default {
   mounted(){
     // console.log('workgroup > mounted')
     console.log('workgroup > mounted')
-    this.onLoad()
   },
   destroyed() {
     console.log('workgroup > destroyed')
@@ -76,7 +60,6 @@ export default {
   methods: {
     onLoad() {
       console.log('workgroup > methods > onLoad')
-      // this.listWorkgroup=[]
       setTimeout(() => {
         if (this.refreshing) {
           this.list = [];
@@ -84,18 +67,11 @@ export default {
         }
 
         for (let i = 0; i < 5; i++) {
-          this.listWorkgroup.push({
-            Id:i,
-            HeadUrl:"https://img.yzcdn.cn/vant/cat.jpeg",
-            WorkgroupName:`工作组${i}`,
-            MessageNum:199,
-            UnreadNum:102,
-            PersonsNum:5,
-            Tags:["标签A","标签B"]
-          });
+          this.list.push(this.list.length + 1);
         }
         this.loading = false;
-        if (this.listWorkgroup.length >= 15) {
+
+        if (this.list.length >= 40) {
           this.finished = true;
         }
       }, 1000);
@@ -109,6 +85,10 @@ export default {
       // 将 loading 设置为 true，表示处于加载状态
       this.loading = true;
       this.onLoad();
+    },
+    /** 检查当前的滚动位置，若已滚动至底部，则会触发 load 事件 */
+    checkScroll(){
+      this.$refs.workgroupList.check()
     },
   },
 };
@@ -126,27 +106,7 @@ export default {
     border-bottom: solid 1px #eee;
   }
   .workgroup-content{
-    margin: 38px 0 38px 0;
-    .content-item{
-   
-      display: flex;
-      justify-content: flex-start;
-      .item-right{
-        margin-left:15px;
-        .right-name{
-          font-size:20px;
-        }
-        .right-num{
-          span{ margin-right:10px; }
-        }
-        .right-tags{
-          span{ margin-right:10px; }
-        }
-      }
-      .item-left{        
-        width:62px;
-      }
-    }
+    margin: 37px 0 37px 0;
   }
 }
 </style>

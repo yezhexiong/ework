@@ -1,6 +1,6 @@
 <template>
   <div class="ework-index">
-    <span v-show="curTabbar === 'message'">
+    <span v-if="curTabbar === 'message'">
       <message-box />
     </span>
     <!-- <span v-show="curTabbar === 'workgroup'"> -->
