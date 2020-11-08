@@ -18,14 +18,23 @@
         >
           <van-cell v-for="item in listWorkgroup" :key="item.Id">
             <template>
-              <div class="content-item">
-                <div class="item-left"><van-image style="border-radius: 13px;" round fit="cover" :src="item.HeadUrl" width="4rem" height="4rem"/></div>
+              <!-- <div class="content-item" @click="$router.push({name:`workgroupMessage`,params:{Id:item.Id,UserName:item.WorkgroupName}})"> -->
+              <div class="content-item" @click="$router.push({path:`/workgroupMessage`,query:{Id:item.Id,UserName:item.WorkgroupName}})">
+                <div class="item-left">
+                  <span v-for="user in item.Users" :key="user.UserName">
+                    {{user.UserName}}
+                  </span>
+                  <!-- <span>法</span> -->
+                </div>
                 <div class="item-right">
-                  <div class="right-name">{{item.WorkgroupName}}</div>
-                  <div class="right-num"><span>帖子数量{{item.MessageNum}}万</span><span>未读{{item.UnreadNum}}</span><span>人员{{item.PersonsNum}}人</span></div>
-                  <div class="right-tags">
-                    <van-tag v-for="tag in item.Tags" :key="tag" type="primary">{{tag}}</van-tag>
+                  <div class="right-line1">
+                    <div class="line1-left">{{item.WorkgroupName}}</div>
+                    <div class="line1-right">
+                      <van-tag v-for="tag in item.Tags" :key="tag" type="primary">{{tag}}</van-tag>
+                    </div>
                   </div>
+                  <div class="right-line2"><span>帖子数量{{item.MessageNum}}万</span><span>未读{{item.UnreadNum}}</span><span>人员{{item.PersonsNum}}人</span></div>
+                  
                 </div>
               </div>
             </template>
@@ -37,12 +46,9 @@
   </div>
 </template>
 <script>
-// import { Grid, GridItem,Col, Row,List,Cell,PullRefresh } from "vant";
 import { Col,Row,Tag,Image,List,Cell,PullRefresh } from "vant";
 export default {
   components: {
-    // [Grid.name]: Grid,
-    // [GridItem.name]: GridItem,
     [Col.name]: Col,
     [Row.name]: Row,
     [Tag.name]: Tag,
@@ -60,13 +66,13 @@ export default {
       loading: false,
       finished: false,
       listWorkgroup: [],
+      scrollTop:0,
     };
   },
   created() {
     console.log('workgroup > created')
   },
   mounted(){
-    // console.log('workgroup > mounted')
     console.log('workgroup > mounted')
     this.onLoad()
   },
@@ -76,7 +82,6 @@ export default {
   methods: {
     onLoad() {
       console.log('workgroup > methods > onLoad')
-      // this.listWorkgroup=[]
       setTimeout(() => {
         if (this.refreshing) {
           this.list = [];
@@ -86,7 +91,12 @@ export default {
         for (let i = 0; i < 5; i++) {
           this.listWorkgroup.push({
             Id:i,
-            HeadUrl:"https://img.yzcdn.cn/vant/cat.jpeg",
+            // HeadUrl:"https://img.yzcdn.cn/vant/cat.jpeg",
+            Users:[
+              {UserName:"陈法勇"},
+              {UserName:"陈嘉松"},
+              {UserName:"叶浙雄"},
+            ],
             WorkgroupName:`工作组${i}`,
             MessageNum:199,
             UnreadNum:102,
@@ -111,6 +121,23 @@ export default {
       this.onLoad();
     },
   },
+  
+  //进入该页面时，用之前保存的滚动位置赋值
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      console.log('workgroup -> index -> beforeRouteEnter -> vm.scrollTop=',vm.scrollTop)
+      console.log('workgroup -> index -> beforeRouteEnter -> document.body.scrollHeight=',document.body.scrollHeight)
+      document.body.scrollTop = vm.scrollTop
+    })
+  },
+  //在页面离开时记录滚动位置
+  beforeRouteLeave (to, from, next) {
+    this.scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+    console.log('workgroup -> index -> beforeRouteLeave -> this.scrollTop=',this.scrollTop)
+    console.log('workgroup -> index -> beforeRouteLeave -> document.body.scrollHeight=',document.body.scrollHeight)
+    next()
+  },
+
 };
 </script>
 
@@ -128,24 +155,50 @@ export default {
   .workgroup-content{
     margin: 38px 0 38px 0;
     .content-item{
-   
       display: flex;
       justify-content: flex-start;
       .item-right{
-        margin-left:15px;
-        .right-name{
-          font-size:20px;
+        margin-left:5px;
+        width:100%;
+        .right-line1{
+          display: flex;
+          justify-content:space-between;
+          align-content:space-between;
+          .line1-left{
+            font-size:18px;
+          }
+          .line1-right{
+            display: flex;
+            justify-content: flex-start;
+            span{ margin-right:10px; }
+          }
         }
-        .right-num{
-          span{ margin-right:10px; }
-        }
-        .right-tags{
+        .right-line2{
           span{ margin-right:10px; }
         }
       }
-      .item-left{        
-        width:62px;
-      }
+      .item-left{
+        display: flex;
+        justify-content:space-around;
+        width:46px;
+        height:40px;
+        flex-wrap:wrap;
+        background-color: #eee;
+        border:solid 1px #ccc;
+        border-radius: 5px;
+        padding:2px;
+        overflow: hidden;
+        span{
+          width:18px;
+          height:18px;
+          line-height:18px;
+          color:#fff;
+          background-color:#f97;
+          text-align: center;
+          border-radius: 5px;
+          overflow: hidden;
+        }
+      } 
     }
   }
 }

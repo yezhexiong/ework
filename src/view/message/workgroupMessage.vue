@@ -6,12 +6,15 @@
           type="flex"
           justify="center"
           align="center"
-          style="height:39px"
+          style="height: 39px"
         >
-          <van-col span="5" offset="1">雁过留声</van-col>
-          <van-col span="12"></van-col>
-          <van-col span="3"><van-icon name="search" size="20" @click="searchVisible = true"/></van-col>
-          <van-col span="3"><van-icon name="filter-o" size="20" @click="$router.push({path: `/indexProSearch`,})" /></van-col>
+          <van-col span="24">
+            <van-nav-bar :title="$route.query.UserName" left-text="返回" left-arrow @click-left="$router.push({path: `/home/workgroup`,})">
+              <template #right>
+                <van-icon name="search" size="18" @click="searchVisible = true"/>
+              </template>
+            </van-nav-bar>
+          </van-col>
         </van-row>
       </span>
       <span v-else>
@@ -34,15 +37,13 @@
       </span>
     </div>
     <topics-box>
-    </topics-box>   
-    <!-- 相关配套组件 -->
+    </topics-box>
   </div>
 </template>
 <script>
-import { Search,Icon,Col,Row, Toast} from "vant";
+import { Search,Icon,Col,Row,Toast,NavBar } from "vant";
 
 import TopicsBox from "@/view/message/topics";
-// import IndexSearchBox from "@/view/message/indexSearch";
 
 export default {
   components: {
@@ -51,46 +52,50 @@ export default {
     [Col.name]: Col,
     [Row.name]: Row,
     [Toast.name]: Toast,
+    [NavBar.name]: NavBar,
+
     TopicsBox,
-    // IndexSearchBox,
   },
   data() {
     return {
       searchVisible: false,
       searchKey: "",
-      scrollTop:0,
     };
   },
   created() {
-    console.log('message > created')
+    console.log('workgroupMessage > created')
   },
   mounted(){
-    console.log('message > mounted')
+    console.log('workgroupMessage > mounted')
+    console.log('$route.params=',this.$route.params)
+    console.log('$route.query=',this.$route.query)
   },
   destroyed() {
-    console.log('message > destroyed')
+    console.log('workgroupMessage > destroyed')
   },
   methods: {
     onSearch() {
       Toast("onSearch");
       this.searchVisible = false;
     },
-  },  
-  //进入该页面时，用之前保存的滚动位置赋值
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      console.log('message -> index -> beforeRouteEnter -> vm.scrollTop=',vm.scrollTop)
-      console.log('message -> index -> beforeRouteEnter -> document.body.scrollHeight=',document.body.scrollHeight)
-      document.body.scrollTop = vm.scrollTop
-    })
+    onHidenSearch() {
+      Toast("onHidenSearch");
+      this.searchVisible = false;
+    },
+    onShowSearch() {
+      this.searchVisible = true;
+    },
   },
   //在页面离开时记录滚动位置
   beforeRouteLeave (to, from, next) {
-    this.scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-    console.log('message -> index -> beforeRouteLeave -> this.scrollTop=',this.scrollTop)
-    console.log('message -> index -> beforeRouteLeave -> document.body.scrollHeight=',document.body.scrollHeight)
+    console.log('wrokgroupMessage -> beforeRouteLeave -> document.body.scrollHeight=',document.body.scrollHeight)
     next()
-  },
+  },  
+  //进入该页面时，用之前保存的滚动位置赋值
+  beforeRouteEnter (to, from, next) {
+    console.log('wrokgroupMessage -> beforeRouteEnter -> document.body.scrollHeight=',document.body.scrollHeight)
+    next()
+  }
 };
 </script>
 
@@ -111,6 +116,9 @@ export default {
   }
   .van-search {
     padding: 0;
+  }
+  .van-nav-bar {
+    height: 38px;
   }
 }
 </style>

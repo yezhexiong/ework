@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <router-view />
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive"></router-view>
+    </keep-alive>
+    <router-view v-if="!$route.meta.keepAlive"></router-view>
   </div>
 </template>
 
@@ -11,8 +14,18 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-
-html,body{ width: 100%; height: 100%; overflow: scroll;}
-html::-webkit-scrollbar, body::-webkit-scrollbar{width:0px;height:0px;}
-body{margin:0;}
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+body {
+  margin: 0;
+}
 </style>

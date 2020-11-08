@@ -1,84 +1,61 @@
 <template>
-  <div class="my-home-master">
-    <div class="my-menu-head">
-    my-menu-head
+<div class="ework-message">
+   <div class="message-header">
+      <span v-if="!searchVisible">
+        <van-row
+          type="flex"
+          justify="center"
+          align="center"
+          style="height: 139px"
+        >
+        <van-col span="24">
+          <van-nav-bar
+            title="标题"
+            left-text="返回"
+            right-text="按钮"
+            left-arrow
+          />
+          <van-nav-bar title="标题" left-text="返回" left-arrow>
+            <template #right>
+              <van-icon name="search" size="18" />
+            </template>
+          </van-nav-bar>
+          </van-col>
+        </van-row>
+      </span>
+      <span v-else>
+        <van-row
+          type="flex"
+          justify="center"
+          align="center"
+          style="height: 39px"
+        >
+          <van-col span="24">
+            <van-search
+              show-action
+              placeholder="请输入搜索关键词"
+            />
+          </van-col>
+        </van-row>
+      </span>
     </div>
-    <div class="my-menu-body">
-      <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-              <li>通讯录管理</li>
-    </div>
-    <div class="my-menu-bottom">
-     my-menu-bottom
-    </div>
-  </div>
+</div>
 </template>
 <script>
-import { Cell } from "vant";
-import { List } from "vant";
-import { Search } from "vant";
+import { NavBar } from "vant";
 import { Icon } from "vant";
-import { Col, Row } from 'vant';
-// import { NavBar } from "vant";
-// import { Toast } from "vant";
-import { Tabbar, TabbarItem } from "vant";
+import { Row } from "vant";
+import { Col } from "vant";
 export default {
   components: {
-    [Tabbar.name]: Tabbar,
-    [TabbarItem.name]: TabbarItem,
-    [List.name]: List,
-    [Cell.name]: Cell,
-    // [NavBar.name]: NavBar,
-    [Search.name]: Search,
-    [Icon.name]: Icon,
-    [Col.name]: Col,
+    [NavBar.name]: NavBar,
+    [Icon.name]: NavBar,
     [Row.name]: Row,
+    [Col.name]: Col,
   },
   data() {
     return {
-      active: 0,
-      icon: {
-        active: "https://img.yzcdn.cn/vant/user-active.png",
-        inactive: "https://img.yzcdn.cn/vant/user-inactive.png",
-      },
-      list: [],
-      loading: false,
-      finished: false,
-      value: "",
+      searchVisible: false,
     };
   },
   methods: {
@@ -110,77 +87,22 @@ export default {
 </script>
 
 <style lang="less">
-
-.my-home-master {
-  // display: -webkit-box;
-  // display: -webkit-flex;
-  // display: flex;
-  // height: 100%;
-  // border:solid 1px red;
-  // flex-direction: column;
-  // justify-content: center;
-  // align-items: center;
-  .my-menu-head{
+.ework-message {
+  .message-header {
     position: fixed;
-    top:0;
     width: 100%;
-    height:50px;
-    border-bottom:solid 1px #ddd;
-    background-color: #eee;
+    top: 0;
+    height: 37px;
+    z-index: 1;
+    background: #eee;
+    border-bottom: solid 1px #eee;
   }
-  .my-menu-bottom{
-    position: fixed;
-    bottom:0;
-    width: 100%;
-    height:50px;
-    border-top:solid 1px ddd;
-    background-color: #eee;
+  //覆盖原有控件样式
+  .van-cell {
+    padding: 0;
   }
-  .my-menu-body{
-    width: 100%;
-    border:solid 1px green;
-    margin-top:50px;
-    margin-bottom:50px;
+  .van-search {
+    padding: 0;
   }
-}
-.my-menu-head1 {
-  position: fixed;
-  width: 100%;
-  z-index: 1;
-  top: 0;
-  //     z-index: 1;
-  // display: -webkit-box;
-  // display: -webkit-flex;
-  // display: flex;
-  // box-sizing: content-box;
-  // width: 100%;
-  // height: 50px;
-  // padding-bottom: constant(safe-area-inset-bottom);
-  // padding-bottom: env(safe-area-inset-bottom);
-  // background-color: #fff;
-
-  // position: fixed;
-  // bottom: 0;
-  // left: 0;
-
-  // display: -webkit-box;
-  // display: -webkit-flex;
-  // display: flex;
-  // -webkit-box-flex: 1;
-  // -webkit-flex: 1;
-  // flex: 1;
-  // -webkit-box-orient: vertical;
-  // -webkit-box-direction: normal;
-  // -webkit-flex-direction: column;
-  // flex-direction: column;
-  // -webkit-box-align: center;
-  // -webkit-align-items: center;
-  // align-items: center;
-  // -webkit-box-pack: center;
-  // -webkit-justify-content: center;
-  // justify-content: center;
-  // color: #646566;
-  // font-size: 12px;
-  // line-height: 1;
 }
 </style>
