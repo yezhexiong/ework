@@ -36,7 +36,8 @@ module.exports = {
     }
   },
   // 选项...
-  publicPath: process.env.NODE_ENV === 'production'
-    ? '/ework/'
-    : '/'
+  publicPath:'/'
+  // publicPath: process.env.NODE_ENV === 'production'
+  //   ? '/mcs/' //发布到github page使用 mcs为git项目名称
+  //   : '/'
 };
